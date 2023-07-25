@@ -1,5 +1,4 @@
 # 소스 폴더 안의 파일들을 목적지 폴더로 복사하는 코드
-
 import os
 import shutil
 

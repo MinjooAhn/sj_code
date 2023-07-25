@@ -1,7 +1,3 @@
-# 이 파일은 json 파일을 파싱하여 필요한 태그 값들을 추출하여 csv 파일로 만드는 프로그램입니다.
-# 사용법: json 파일들이 있는 디렉토리와 만들 csv 파일의 이름을 작성
-# ex) python json-to-csv.py json_dir_name csv_file_name.csv
-
 import sys
 import os
 import glob
@@ -11,11 +7,10 @@ import pandas as pd
 import logging
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(filename=sys.argv[0] + ".log", level=logging.INFO,
+logging.basicConfig(filename=sys.argv[0] + ".log", level=logging.DEBUG,
                     datefmt='%Y-%m-%d %H%M%S', format='%(asctime)s | %(levelname)s | %(message)s')
 
 NO_VALUE = "no_value"
-
 
 def make_csv_lines(json_file_path):
     csv_lines = []
@@ -75,6 +70,7 @@ def make_csv_lines(json_file_path):
         try:
             speaker_id = speaker["speakerId"]
         except:
+            logger.info(f"no speaker_id, file_name : {json_file_path}")
             return []
 
         try:
@@ -158,15 +154,11 @@ def get_json_files(json_dir):
     """
     제이선 파일 리스트 제작 함수
 
-    Arguments
-    ---------
-    base_dir : str
-        데이터 파일 다이렉토리
-
-    Returns
-    -------
-    list
-        데이터 파일 다이렉토리 리스트
+    Arguments:
+    json_dir : json file directory [str]
+    
+    Output:
+    files : json file directory with file extension [str]
     """
     file_ext = 'json'
     files = glob.glob(os.path.join(json_dir, '*.' + file_ext))
@@ -176,7 +168,12 @@ def get_json_files(json_dir):
 
 def main(json_dir, csv_file):
     """
-    json-to-csv.py json_dir csv_file
+    Creating csv using json inputs
+    Arguments:
+    json_dir : json file directory [str]
+    csv_file : csv file directory [str]
+    Output:
+    Logs logger with error / creates an extracted csv file
     """
     print(json_dir)
     print(csv_file)

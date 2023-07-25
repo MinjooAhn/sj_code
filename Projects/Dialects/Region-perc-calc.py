@@ -1,5 +1,13 @@
 import pandas as pd
 import numpy as np
+"""
+Python code for data analysis
+Creating an excel sheet with percentage values of each intent / intent category to view major trends
+Analysing different age groups in different regions seperately 
+Uses a template of data counts provided as excel in the repository ""
+"""
+
+# Indexing the Categories in the excel file
 
 REPstart = 2 #추측
 REPend = 23   #자랑
@@ -21,7 +29,25 @@ gramstart = 62  #DEC
 gramend = 66   #YNI
 
 def load_data():
-    # Accept user input for the 'Type' parameter
+    """
+    Load data from an Excel file based on user input for the 'Type' and 'Region' parameters.
+
+    # Note that file pathing must be set to run the code.
+
+    Input:
+    This function prompts the user to input a value for 'Type' (1 or 2) and 'Region'
+    (전라, 충청, 제주, 강원, 경상). Type 1 refers to '1인발화' and type 2 refers to '2인발화' but the file paths have been removed.
+    Based on the input, it determines the appropriate file path
+    and creates a list of region_variable corresponding to the chosen region. It then reads
+    the data from the Excel file and returns the needed objects
+
+    Returns:
+    - df (pandas.DataFrame): A pandas DataFrame containing the loaded data from the Excel file.
+    - region_variable (list): A list of integers representing a range of region codes based on the chosen region.
+    - type_input (str): The user-provided 'Type' input 1 for 1인발화 and 2 for 2인발화 but this is determined by file pathing
+    - region_input (str): The user-provided 'Region' input (one of '전라', '충청', '제주', '강원', '경상')
+.
+    """
     type_input = input("Enter Type (1 or 2): ")
     
     if type_input == '1':
@@ -55,6 +81,12 @@ def load_data():
 
 # Call the function to load the data and obtain the region_variable
 data_frame, region_variable, type_input,region_input = load_data()
+
+
+# This part of the code sets creates a pandas dataframe for all the possible categories.
+# In my run of the code, there were some cells in the excel file missing that created zero division error.
+# Code should have been fine with 0 values in cells, but due to the error I set if statements to manualy set it to 0 to prevent error.  (Should be improved) 
+# Lastly as this a repetitive code block, it could be tidied up by setting repeating variable strings and calling them as a for loop. (Future improvement)
 
 #REP
 REP_df = data_frame.iloc[REPstart:REPend+1, [2]+ region_variable]
@@ -305,6 +337,8 @@ intention_df.columns = ["Intention",
                      f"{region_input} 90대 여"]
 intention_df["Intention"] = intention_df["Intention"].fillna(method='ffill')
 
+# Larger Intention category was a joint category of all sub categories as shown in the excel file.
+# There probably is a better way to deal with these joint category situation, but I just took the measure to add all the rows and use index slicing to create the df.
 # Create a new DataFrame to store the counts
 intention2_df = pd.DataFrame(columns=["Intention"])
 
@@ -328,7 +362,8 @@ for intention_type in intention_types:
     intention2_df = pd.concat([intention2_df,pd.DataFrame([row])],ignore_index=True)
 
 
-# 엑셀파일 생성
+# Excel file creation (path name should be set)
+
 
 path = r""
 writer = pd.ExcelWriter(path + region_input +type_input +"인발화 통계.xlsx", engine = "xlsxwriter")
@@ -348,4 +383,3 @@ writer.close()
 if __name__ == '__main__':
     # Call the function to load the data and obtain the region_variable
      data_frame, region_variable, type_input, region_input = load_data()
-       
