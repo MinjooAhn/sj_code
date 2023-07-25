@@ -1,7 +1,7 @@
 # sj_project - Dialect and Foreigner Data Analysis
 
 ## Overview
-
+This is a collection of code I wrote for data extraction and data analysis for the sj_project.
 This project is divided into two main areas: Dialect Data Analysis and Foreigner Data Analysis. Each area contains specific code and tools I created to extract data from different formats and analyse them.
 
 ## Dialect Analysis
