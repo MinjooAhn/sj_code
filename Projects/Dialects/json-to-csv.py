@@ -17,7 +17,6 @@ def make_csv_lines(json_file_path):
     # json_file_name = os.path.basename(json_file_path)
     json_file_name = Path(os.path.basename(json_file_path)).stem
 
-    # 대화의 타입은 파일의 이름에서 구한다.
     if json_file_name.startswith("say"):
         utterance_type = "say"
     elif json_file_name.startswith("talk"):
