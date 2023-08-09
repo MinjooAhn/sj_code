@@ -39,3 +39,6 @@ cd sj_project
 
 ## Usage
 All file paths have been removed so data paths must be set if needed. Also the code is not generally applicable.
+
+## Future Changes
+I should revise the code to utilise loops and exception to simplify the notebooks
