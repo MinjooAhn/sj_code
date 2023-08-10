@@ -19,6 +19,10 @@ The Foreigner Analysis section consists of the following components:
 
 - Excel Data Extractor: A script to extract relevant data from Excel files.
 
+## Foreigner Analysis
+
+-json dataset creator: Reads the excel datafile and creates a set of json files using the set template.
+
 ## Requirements
 
 To run the code in this repository, you'll need the following prerequisites:
